@@ -39,9 +39,23 @@ def index():
     tutupDB()
     return render_template('index.html', container=container)
 
-@app.route('/tambah')
+@app.route('/tambah', methods=['GET','POST'])
 def tambah():
-    return render_template('tambah.html')
+    if request.method == 'POST':
+        nama = request.form['nama']
+        kelas = request.form['kelas']
+        asal_sekolah = request.form['asal_sekolah']
+        date = request.form['date']
+        alamat = request.form['alamat']
+        bukaDB()
+        sql = "INSERT INTO siswa (nama, kelas, asal_sekolah, tanggal, alamat) VALUES(%s, %s, %s, %s, %s)"
+        val = (nama, kelas, asal_sekolah, date, alamat)
+        cursor.execute(sql, val)
+        conn.commit()
+        tutupDB()
+        return redirect(url_for('index'))
+    else:
+        return render_template('tambah.html')
 
 
 
