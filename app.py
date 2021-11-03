@@ -57,7 +57,23 @@ def tambah():
     else:
         return render_template('tambah.html')
 
-
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    bukaDB()
+    if request.method == 'POST':
+        nama = request.form['nama']
+        kelas = request.form['kelas']
+        asal_sekolah = request.form['asal_sekolah']
+        date = request.form['date']
+        alamat = request.form['alamat']
+        no = request.form['no']
+        sql = "UPDATE siswa SET nama=%s, kelas=%s, asal_sekolah=%s, tanggal=%s, alamat=%s WHERE no=%s"
+        val = (nama, kelas, asal_sekolah, date, alamat, no)
+        cursor.execute(sql, val)
+        conn.commit()
+        tutupDB()
+        return redirect(url_for('index'))
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
