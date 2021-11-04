@@ -80,6 +80,15 @@ def edit():
     else:
         return render_template('siswa.html')
 
+@app.route('/hapus/<no>', methods=['GET', 'POST'])
+def hapus(no):
+    bukaDB()
+    cursor.execute("DELETE FROM siswa WHERE no=%s",(no))
+    conn.commit()
+    tutupDB()
+    return redirect(url_for('siswa'))
+
+
 
 if __name__ == '__main__':
    app.run(debug=True)
