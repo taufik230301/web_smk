@@ -3,7 +3,7 @@ from flask import Flask, render_template, \
 import pymysql.cursors, os
 
 app = Flask(__name__)
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # @app.route('/nama')
 # def hello_worl():
@@ -57,6 +57,7 @@ def tambah():
         cursor.execute(sql, val)
         conn.commit()
         tutupDB()
+        flash('Berhasil Menambahkan Data')
         return redirect(url_for('siswa'))
     else:
         return render_template('tambah.html')
@@ -76,6 +77,7 @@ def edit():
         cursor.execute(sql, val)
         conn.commit()
         tutupDB()
+        flash('Berhasil Mengedit Data')
         return redirect(url_for('siswa'))
     else:
         return render_template('siswa.html')
@@ -86,6 +88,7 @@ def hapus(no):
     cursor.execute("DELETE FROM siswa WHERE no=%s",(no))
     conn.commit()
     tutupDB()
+    flash('Berhasil Menghapus Data')
     return redirect(url_for('siswa'))
 
 
