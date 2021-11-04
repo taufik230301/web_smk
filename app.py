@@ -29,6 +29,10 @@ def tutupDB():
 
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/siswa')
+def siswa():
     bukaDB()
     container = []
     sql = "SELECT * FROM siswa"
@@ -37,7 +41,7 @@ def index():
     for data in result:
         container.append(data)
     tutupDB()
-    return render_template('index.html', container=container)
+    return render_template('siswa.html', container=container)
 
 @app.route('/tambah', methods=['GET','POST'])
 def tambah():
@@ -53,7 +57,7 @@ def tambah():
         cursor.execute(sql, val)
         conn.commit()
         tutupDB()
-        return redirect(url_for('index'))
+        return redirect(url_for('siswa'))
     else:
         return render_template('tambah.html')
 
@@ -72,8 +76,9 @@ def edit():
         cursor.execute(sql, val)
         conn.commit()
         tutupDB()
-        return redirect(url_for('index'))
-    return render_template('index.html')
+        return redirect(url_for('siswa'))
+    else:
+        return render_template('siswa.html')
 
 
 if __name__ == '__main__':
