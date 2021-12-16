@@ -92,7 +92,6 @@ def hapus(no):
     return redirect(url_for('siswa'))
 
 
-
 if __name__ == '__main__':
    app.run(debug=True)
 
